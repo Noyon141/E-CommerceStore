@@ -4,6 +4,8 @@
 
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "../ui/button";
@@ -20,8 +22,11 @@ import { Modal } from "../ui/modal";
 
 //STORE MODAL COMPONENT
 export const StoreModal = () => {
-  //DECLARING HOOKS
+  //DECLARING CUSTOM HOOKS
   const storeModal = useStoreModal();
+
+  //REACT HOOKS
+  const [isLoading, setIsLoading] = useState(false);
 
   //APPLYING ZOD SCHEMA AND SUBMITTING OPTION TO FORM
   const formSchema = z.object({
@@ -35,9 +40,21 @@ export const StoreModal = () => {
     },
   });
 
+  //ON SUBMIT FUNCTION
+
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-    //TODO: Create store
+    try {
+      setIsLoading(true);
+
+      //API CALL TO CREATE STORE
+      const response = await axios.post("/api/stores", data);
+
+      console.log(response.data);
+    } catch (error) {
+      console.log("[MODAL_STORE_ERROR]", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Modal
@@ -57,17 +74,29 @@ export const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="E-Commerce store name" />
+                      <Input
+                        {...field}
+                        disabled={isLoading}
+                        placeholder="E-Commerce store name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <div className="flex items-center justify-end space-x-2 pt-6 ">
-                <Button variant={"ghost"} onClick={storeModal.onClose}>
+                <Button
+                  variant={"ghost"}
+                  disabled={isLoading}
+                  onClick={storeModal.onClose}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-black hover:bg-[#0F0F0F]">
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="bg-black hover:bg-[#0F0F0F]"
+                >
                   Continue
                 </Button>
               </div>

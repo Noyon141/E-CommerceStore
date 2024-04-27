@@ -1,5 +1,7 @@
 "use client";
 
+//IMPORTING PACKAGES
+
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,15 +18,17 @@ import {
 import { Input } from "../ui/input";
 import { Modal } from "../ui/modal";
 
+//STORE MODAL COMPONENT
 export const StoreModal = () => {
+  //DECLARING HOOKS
   const storeModal = useStoreModal();
 
-  //Applying zod schema and submit to form
+  //APPLYING ZOD SCHEMA AND SUBMITTING OPTION TO FORM
   const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
   });
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -63,7 +67,9 @@ export const StoreModal = () => {
                 <Button variant={"ghost"} onClick={storeModal.onClose}>
                   Cancel
                 </Button>
-                <Button type="submit">Continue</Button>
+                <Button type="submit" className="bg-black hover:bg-[#0F0F0F]">
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>

@@ -6,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -83,6 +84,7 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
                       className=""
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

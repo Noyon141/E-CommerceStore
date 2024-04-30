@@ -43,12 +43,12 @@ export const StoreModal = () => {
 
   //ON SUBMIT FUNCTION
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
 
       //API CALL TO CREATE STORE
-      const response = await axios.post("/api/stores", data);
+      const response = await axios.post("/api/stores", values);
       //REDIRECTING TO STORE_ID DASHBOARD PAGE WITH A FULL REFRESH
 
       window.location.assign(`/${response.data.id}`);

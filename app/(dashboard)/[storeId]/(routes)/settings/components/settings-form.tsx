@@ -1,4 +1,6 @@
 "use client";
+
+import { AlertModal } from "@/components/modals/alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -46,6 +48,23 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
   });
 
   //HANDLE FORM SUBMISSION
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/stores/${params.storeId}`);
+      router.refresh();
+      router.push("/");
+      toast.success("Store deleted successfully");
+    } catch (error) {
+      toast.error(
+        "Make sure you have deleted all the products and categories first."
+      );
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   const onSubmit = async (data: SettingsFormValues) => {
     try {
       setLoading(true);
@@ -58,9 +77,16 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
       setLoading(false);
     }
   };
+  //RENDER THE FORM
 
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        loading={loading}
+        onConfirm={onDelete}
+      />
       <div className="flex items-center justify-between">
         <Heading
           title="Settings"

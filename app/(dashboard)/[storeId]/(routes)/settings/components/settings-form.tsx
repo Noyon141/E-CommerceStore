@@ -12,9 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
+import axios from "axios";
 import { Trash } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 import { Heading } from "./heading";
 
@@ -27,6 +30,8 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const params = useParams();
 
   //CREATING A FORM SCHEMA USING ZOD AND INFERRING THE TYPE OF THE FORM VALUES
   type SettingsFormValues = z.infer<typeof formSchema>;
@@ -42,7 +47,16 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 
   //HANDLE FORM SUBMISSION
   const onSubmit = async (data: SettingsFormValues) => {
-    console.log(data);
+    try {
+      setLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}`, data);
+      router.refresh();
+      toast.success("Store updated successfully");
+    } catch (error) {
+      toast.error("Failed to update store");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +71,7 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
           variant={"destructive"}
           size={"icon"}
           className=""
-          onClick={() => {}}
+          onClick={() => setOpen(true)}
           disabled={loading}
         >
           <Trash className="h-5 w-5 font-semibold" />

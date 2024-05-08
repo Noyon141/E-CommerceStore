@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { UseOrigin } from "@/hooks/use-origin";
@@ -143,6 +144,26 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
           className="w-full space-y-8"
           onSubmit={form.handleSubmit(onSubmit)}
         >
+          {/* ADDED A FORM FIELD FOR IMAGE UPLOAD */}
+
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid sm:grid-cols-3 gap-8">
             <FormField
               control={form.control}

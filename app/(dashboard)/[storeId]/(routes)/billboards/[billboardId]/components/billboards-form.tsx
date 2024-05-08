@@ -49,7 +49,10 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
 
   const title = initialData ? "Edit billboard" : "Create billboard";
   const description = initialData ? "Edit billboard" : "Add a new billboard.";
-  const toastMessage = initialData ? "Billboard updated" : "Created billboard.";
+  const toastSuccess = initialData ? "Billboard updated" : "Created billboard.";
+  const toastError = initialData
+    ? "Failed to update billboard"
+    : "Failed to create billboard.";
   const action = initialData ? "Save changes" : "Create";
 
   //CREATING A FORM SCHEMA USING ZOD AND INFERRING THE TYPE OF THE FORM VALUES
@@ -78,14 +81,14 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
       router.refresh();
       router.push("/");
-      toast.success("Store deleted successfully");
+      toast.success("Billboard deleted successfully.");
     } catch (error) {
-      toast.error(
-        "Make sure you have deleted all the products and categories first."
-      );
+      toast.error("Make sure you have deleted all the categories first.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -97,11 +100,18 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
   const onSubmit = async (data: BillboardsFormValues) => {
     try {
       setLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}`, data);
+      if (initialData) {
+        await axios.patch(`/api/${params.storeId}/billboards`, data);
+      } else {
+        await axios.post(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          data
+        );
+      }
       router.refresh();
-      toast.success("Store updated successfully");
+      toast.success(toastSuccess);
     } catch (error) {
-      toast.error("Failed to update store");
+      toast.error(toastError);
     } finally {
       setLoading(false);
     }

@@ -49,7 +49,9 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
 
   const title = initialData ? "Edit billboard" : "Create billboard";
   const description = initialData ? "Edit billboard" : "Add a new billboard.";
-  const toastSuccess = initialData ? "Billboard updated" : "Created billboard.";
+  const toastSuccess = initialData
+    ? "Billboard updated."
+    : "Billboard Created.";
   const toastError = initialData
     ? "Failed to update billboard"
     : "Failed to create billboard.";
@@ -101,12 +103,12 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/billboards`, data);
-      } else {
-        await axios.post(
+        await axios.patch(
           `/api/${params.storeId}/billboards/${params.billboardId}`,
           data
         );
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, data);
       }
       router.refresh();
       toast.success(toastSuccess);

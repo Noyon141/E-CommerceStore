@@ -78,7 +78,7 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
     },
   });
 
-  //HANDLE DELETE FUNCTION
+  //HANDLE DELETE FUNCTION TO DELETE THE BILLBOARD
 
   const onDelete = async () => {
     try {
@@ -97,7 +97,7 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
     }
   };
 
-  //HANDLE SUBMIT FUNCTION
+  //HANDLE SUBMIT FUNCTION TO CREATE OR UPDATE THE BILLBOARD
 
   const onSubmit = async (data: BillboardsFormValues) => {
     try {
@@ -111,6 +111,7 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
         await axios.post(`/api/${params.storeId}/billboards`, data);
       }
       router.refresh();
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastSuccess);
     } catch (error) {
       toast.error(toastError);

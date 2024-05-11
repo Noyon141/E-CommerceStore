@@ -21,7 +21,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Billboards.(${data.length})`}
+          title={`Billboards(${data.length})`}
           description="Manage billboards of your store."
         />
         <Button

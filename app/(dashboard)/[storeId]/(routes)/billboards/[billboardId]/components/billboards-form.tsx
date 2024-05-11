@@ -15,7 +15,6 @@ import {
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { UseOrigin } from "@/hooks/use-origin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Billboard } from "@prisma/client";
 import axios from "axios";
@@ -45,7 +44,7 @@ export const BillboardsForm = ({ initialData }: BillboardsFormProps) => {
   const router = useRouter();
   const params = useParams();
 
-  const origin = UseOrigin(); //GETTING THE ORIGIN OF THE WEBSITE
+  //SETTING THE TITLE, DESCRIPTION, TOAST SUCCESS AND TOAST ERROR MESSAGES
 
   const title = initialData ? "Edit billboard" : "Create billboard";
   const description = initialData ? "Edit billboard" : "Add a new billboard.";

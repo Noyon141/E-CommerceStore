@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertModal } from "@/components/modals/alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -51,43 +52,49 @@ export const CellActions: React.FC<CellActionsProps> = ({ data }) => {
     }
   };
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="h-8 w-8 p-0" variant={"ghost"}>
-          <span className="sr-only">Open Menu</span>
-          <MoreHorizontal className="h-5 w-5" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem
-          className="font-semibold"
-          onClick={() => {
-            onCopy(data.id);
-          }}
-        >
-          <Copy className="h-4 w-4 mr-2" />
-          Copy
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="font-semibold"
-          onClick={() =>
-            router.push(`/${params.storeId}/billboards/${data.id}`)
-          }
-        >
-          <Edit className="h-4 w-4 mr-2" />
-          Update
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="font-semibold"
-          onClick={() => {
-            onDelete(data.id);
-          }}
-        >
-          <Trash className="h-4 w-4 mr-2" />
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        loading={loading}
+        onConfirm={() => onDelete(data.id)}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button className="h-8 w-8 p-0" variant={"ghost"}>
+            <span className="sr-only">Open Menu</span>
+            <MoreHorizontal className="h-5 w-5" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            className="font-semibold"
+            onClick={() => {
+              onCopy(data.id);
+            }}
+          >
+            <Copy className="h-4 w-4 mr-2" />
+            Copy
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="font-semibold"
+            onClick={() =>
+              router.push(`/${params.storeId}/billboards/${data.id}`)
+            }
+          >
+            <Edit className="h-4 w-4 mr-2" />
+            Update
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="font-semibold"
+            onClick={() => setOpen(true)}
+          >
+            <Trash className="h-4 w-4 mr-2" />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };

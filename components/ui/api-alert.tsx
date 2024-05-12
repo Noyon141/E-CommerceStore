@@ -48,7 +48,9 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
         <Badge variant={variantMap[variant]}>{textMap[variant]}</Badge>
       </AlertTitle>
       <AlertDescription className="flex items-center mt-3 -mx-5 sm:-mx-0 justify-between w-full gap-x-2 ">
-        <code className="relative rounded-lg bg-muted font-semibold sm:text-base text-sm sm:px-1 font-mono">
+        {/* TRUNCATE IMPLEMENTED BUT NEED TO MAKE IT MOBILE RESPONSIVE  */}
+
+        <code className="relative rounded-lg bg-muted truncate p-0 font-semibold sm:text-base text-sm sm:px-1 font-mono">
           {description}
         </code>
         <Button variant={"ghost"} onClick={onCopy} size={"icon"}>

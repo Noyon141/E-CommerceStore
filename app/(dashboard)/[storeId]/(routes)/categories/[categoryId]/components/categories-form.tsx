@@ -98,7 +98,7 @@ export const CategoriesForm = ({
         `/api/${params.storeId}/categories/${params.categoryId}`
       );
       router.refresh();
-      router.push("/");
+      router.push("/${params.storeId}/categories");
       toast.success("Category deleted successfully.");
     } catch (error) {
       toast.error("Failed to delete category.");

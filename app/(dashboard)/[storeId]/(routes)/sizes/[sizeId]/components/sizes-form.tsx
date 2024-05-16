@@ -60,8 +60,8 @@ export const SizesForm = ({ initialData }: SizesFormProps) => {
   //FORM SCHEMA USING ZOD
 
   const formSchema = z.object({
-    name: z.string().min(1, "label is required"),
-    value: z.string().min(1, "image is required"),
+    name: z.string().min(1, "name is required"),
+    value: z.string().min(1, "value is required"),
   });
 
   //USE FORM HOOK USING ZOD RESOLVER AND DEFAULT VALUES

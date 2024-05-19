@@ -52,7 +52,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             <Image alt="image" fill className="object-cover" src={url} />
           </div>
         ))}
-        <CldUploadWidget uploadPreset="xeuds4nu" onSuccess={onUpload}>
+        {/* NEED TO GET FIXED LATER */}
+        <CldUploadWidget uploadPreset="xeuds4nu" onUpload={onUpload}> 
           {({ open }) => {
             const onClick = () => {
               open();

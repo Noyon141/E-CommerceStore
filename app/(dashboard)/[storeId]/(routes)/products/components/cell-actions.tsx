@@ -14,10 +14,10 @@ import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { billboardColumn } from "./columns";
+import { productColumn } from "./columns";
 
 interface CellActionsProps {
-  data: billboardColumn;
+  data: productColumn;
 }
 
 export const CellActions: React.FC<CellActionsProps> = ({ data }) => {
@@ -33,7 +33,7 @@ export const CellActions: React.FC<CellActionsProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard Id copied successfully.");
+    toast.success("Product Id copied successfully.");
   };
 
   //DELETE FUNCTION
@@ -41,9 +41,9 @@ export const CellActions: React.FC<CellActionsProps> = ({ data }) => {
   const onDelete = async (id: string) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
       router.refresh();
-      toast.success("Billboard deleted successfully.");
+      toast.success("Product deleted successfully.");
     } catch (error) {
       toast.error("Make sure you have deleted all the categories first.");
     } finally {
@@ -80,7 +80,7 @@ export const CellActions: React.FC<CellActionsProps> = ({ data }) => {
           <DropdownMenuItem
             className="font-semibold"
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/products/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />

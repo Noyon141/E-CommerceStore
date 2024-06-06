@@ -5,6 +5,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
+import { ModeToggle } from "./darkmode-toggler";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import {
@@ -76,7 +77,7 @@ export const MainNav = ({
     <>
       <nav
         className={cn(
-          "md:flex items-center space-x-4 lg:space-x-6 hidden",
+          "lg:flex items-center space-x-4 lg:space-x-6 hidden",
           className
         )}
       >
@@ -94,24 +95,26 @@ export const MainNav = ({
             {route.label}
           </Link>
         ))}
+        <ModeToggle />
       </nav>
 
       {/* NAVIGATION BAR ON MOBILE */}
 
-      <div className="sm:hidden p-0">
+      <div className="lg:hidden p-0">
         <Sheet>
           <SheetTrigger asChild>
             <Button className="h-8 w-8 p-0" variant={"ghost"}>
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side={"left"} className={"p-0 w-[65%]"}>
+          <SheetContent side={"left"} className={"p-0 w-[65%] lg:hidden"}>
             <div className="">
-              <SheetHeader className="mt-3">
-                <SheetTitle className="font-bold text-xl tracking-tighter">
+              <SheetHeader className="mt-3 ml-4">
+                <SheetTitle className="font-bold text-xl tracking-tighter text-center">
                   E-ComStore
                 </SheetTitle>
                 <Separator />
+                <ModeToggle />
               </SheetHeader>
 
               <nav

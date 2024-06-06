@@ -94,11 +94,7 @@ export const StoreModal = () => {
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="bg-black hover:bg-[#0F0F0F]"
-                >
+                <Button type="submit" disabled={isLoading} className="">
                   Continue
                 </Button>
               </div>
